@@ -16,7 +16,7 @@ namespace {
 	constexpr int kBgNumY = Game::kScreenHeight / kChipSize;
 
 	//入出力ファイル名
-	const char* const kFileName = "map.txt";
+	const char* const kFileName = "map.bin";
 
 	//マップデータ
 	constexpr int kMapData[kBgNumY][kBgNumX] =
@@ -86,7 +86,8 @@ void Map::update() {
 	}
 	if (Pad::isTrigger(PAD_INPUT_3)) {
 		//ファイルの出力
-		outputData();
+		//outputData();
+		readData();
 	}
 
 
@@ -189,17 +190,21 @@ int Map::chipNum() {
 
 void Map::outputData() {
 
-	//std::ofstream ofs(kFileName, std::ios::binary);
-	std::ofstream ofs(kFileName);
+	std::ofstream ofs(kFileName, std::ios::binary);
+	//std::ofstream ofs(kFileName);
 
-	ofs << "test";
+	ofs.write(reinterpret_cast<char*>(m_mapData.data()), sizeof(int) * kBgNumX * kBgNumY);
 
 	ofs.close();
 }
 
 void Map::readData() {
 
+	std::ifstream ifs(kFileName, std::ios::binary);
 
+	ifs.read(reinterpret_cast<char*>(m_mapData.data()), sizeof(int) * kBgNumX * kBgNumY);
+
+	ifs.close();
 
 }
 
