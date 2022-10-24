@@ -9,21 +9,25 @@ namespace
 
 void SceneTest::init()
 {
-	
+	m_map.init();
 }
 
 void SceneTest::end()
 {
+	m_map.unload();
 }
 
 SceneBase* SceneTest::update()
 {
+	m_map.update();
 	
 	return this;
 }
 
 void SceneTest::draw()
 {
-	DrawString(0, 0, "test", GetColor(255, 255, 255));
+	m_map.draw();
+
+	//DrawString(0, 0, "test", GetColor(255, 255, 255));
 }
 
